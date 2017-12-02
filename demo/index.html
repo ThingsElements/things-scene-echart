@@ -1,0 +1,241 @@
+<!--
+@license
+Copyright © HatioLab Inc. All rights reserved.
+-->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>echart Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="../../things-scene-viewer/things-scene-viewer.html">
+    <link rel="import" href="../../things-scene-viewer/things-scene-layer.html">
+    <link rel="import" href="../../things-scene-viewer/things-scene-handler.html">
+
+    <link rel="import" href="../../things-designer-elements/things-editor-properties.html">
+
+    <link rel="import" href="./things-scene-echart.html">
+
+    <link rel="import" href="./things-theme.html">
+
+    <style is="custom-style" include="things-theme">
+    things-scene-viewer {
+      display: block;
+      width: 1200px;
+      height: 800px;
+    }
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
+      <p>An example of <code>&lt;echart&gt;</code>:</p>
+
+      <things-scene-viewer id='scene'
+                           scene='{{scene}}'
+                           selected='{{selected}}'
+                           model='[[model]]'
+                           mode="1">
+        <things-scene-layer type="selection-layer"></things-scene-layer>
+        <things-scene-layer type="modeling-layer"></things-scene-layer>
+        <things-scene-handler type="text-editor"></things-scene-handler>
+        <things-scene-handler type="move-handler"></things-scene-handler>
+      </things-scene-viewer>
+
+      <p>Properties</p>
+      <things-editor-properties id='props' target="{{props}}" props="[[selected.0.nature.properties]]">
+      </things-editor-properties>
+
+    </template>
+
+    <script>
+      window.addEventListener('WebComponentsReady', function(e) {
+        var app = document.querySelector('#app')
+
+        app.props = {}
+
+        setTimeout(function() {
+          app.scene.on('selected', function(after) {
+            var target = after[0]
+            var props = {}
+            if(target) {
+              target.nature.properties.forEach(function(prop) {
+                var property = prop.property
+                props[property] = target.model[property]
+              })
+            }
+            app.props = props
+          });
+        });
+
+        app.$.props.addEventListener('change', function() {
+          app.selected[0].set(app.props)
+        });
+
+        app.model = {
+          width: 1200,
+          height: 800,
+          components: [{
+            type: 'echart',
+            top: 50,
+            left: 50,
+            width: 600,
+            height: 400,
+            fontSize: 40,
+            fillStyle: '#00ff00',
+            fontColor: '#FF0000',
+            strokeStyle: '#000',
+            lineWidth: 5,
+            value: 40,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+            text: 'SAMPLE ECHARTS',
+            data: {
+              '高度(km)与气温(°C)变化关系': [15, -50, -56.5, -46.5, -22.1, -2.5, -27.7, -55.7, -76.5]
+            },
+            option: `{
+              legend: {
+                data:['高度(km)与气温(°C)变化关系']
+              },
+              tooltip: {
+                trigger: 'axis',
+                formatter: "Temperature : <br/>{b}km : {c}°C"
+              },
+              grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+              },
+              xAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value} °C'
+                }
+              },
+              yAxis: {
+                type: 'category',
+                axisLine: {onZero: false},
+                axisLabel: {
+                  formatter: '{value} km'
+                },
+                boundaryGap: false,
+                data: ['0', '10', '20', '30', '40', '50', '60', '70', '80']
+              },
+              series: [{
+                name: '高度(km)与气温(°C)变化关系',
+                type: 'line',
+                smooth: true,
+                lineStyle: {
+                  normal: {
+                    width: 3,
+                    shadowColor: 'rgba(0,0,0,0.4)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 10
+                  }
+                }
+              }]
+            }`
+          }, {
+            type: 'echart',
+            top: 300,
+            left: 500,
+            width: 600,
+            height: 400,
+            fontSize: 40,
+            fillStyle: 'orange',
+            fontColor: '#FF0000',
+            strokeStyle: '#000',
+            lineWidth: 5,
+            value: 40,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+            text: 'SAMPLE ECHARTS',
+            data: {
+              '高度(km)与气温(°C)变化关系': [15, -50, -56.5, -46.5, -22.1, -2.5, -27.7, -55.7, -76.5]
+            },
+            option: `{
+              title: {
+                text: '堆叠区域图'
+              },
+              tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'cross',
+                  label: {
+                    backgroundColor: '#6a7985'
+                  }
+                }
+              },
+              legend: {
+                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+              },
+              toolbox: {
+                feature: {
+                  saveAsImage: {}
+                }
+              },
+              grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+              },
+              xAxis : [{
+                type : 'category',
+                boundaryGap : false,
+                data : ['周一','周二','周三','周四','周五','周六','周日']
+              }],
+              yAxis : [{
+                type : 'value'
+              }],
+              series : [{
+                name:'邮件营销',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[120, 132, 101, 134, 90, 230, 210]
+              }, {
+                name:'联盟广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[220, 182, 191, 234, 290, 330, 310]
+              }, {
+                name:'视频广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[150, 232, 201, 154, 190, 330, 410]
+              }, {
+                name:'直接访问',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[320, 332, 301, 334, 390, 330, 320]
+              }, {
+                name:'搜索引擎',
+                type:'line',
+                stack: '总量',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'top'
+                  }
+                },
+                areaStyle: {normal: {}},
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+              }]
+            }`
+          }]
+        }
+      });
+    </script>
+  </body>
+</html>
