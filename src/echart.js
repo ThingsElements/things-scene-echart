@@ -45,6 +45,7 @@ export default class Echart extends HTMLOverlayContainer {
 
     this.readies = [component]
 
+    // TODO Promise ..
     var script = document.createElement('script');
     script.onload = function () {
       Echart.loaded = true
@@ -55,7 +56,11 @@ export default class Echart extends HTMLOverlayContainer {
     script.src = 'http://echarts.baidu.com/dist/echarts.min.js';
 
     document.head.appendChild(script)
-    Echart.script = script
+
+    script = document.createElement('script');
+
+    script.src = 'http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js';
+    document.head.appendChild(script)
   }
 
   onload() {
