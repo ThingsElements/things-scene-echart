@@ -97,6 +97,20 @@ Copyright © HatioLab Inc. All rights reserved.
             data: {
               '高度(km)与气温(°C)变化关系': [15, -50, -56.5, -46.5, -22.1, -2.5, -27.7, -55.7, -76.5]
             },
+            series: `[{
+              name: '高度(km)与气温(°C)变化关系',
+              data: data['高度(km)与气温(°C)变化关系'],
+              type: 'line',
+              smooth: true,
+              lineStyle: {
+                normal: {
+                  width: 3,
+                  shadowColor: 'rgba(0,0,0,0.4)',
+                  shadowBlur: 10,
+                  shadowOffsetY: 10
+                }
+              }
+            }]`,
             option: `{
               legend: {
                 data:['高度(km)与气温(°C)变化关系']
@@ -125,20 +139,7 @@ Copyright © HatioLab Inc. All rights reserved.
                 },
                 boundaryGap: false,
                 data: ['0', '10', '20', '30', '40', '50', '60', '70', '80']
-              },
-              series: [{
-                name: '高度(km)与气温(°C)变化关系',
-                type: 'line',
-                smooth: true,
-                lineStyle: {
-                  normal: {
-                    width: 3,
-                    shadowColor: 'rgba(0,0,0,0.4)',
-                    shadowBlur: 10,
-                    shadowOffsetY: 10
-                  }
-                }
-              }]
+              }
             }`
           }, {
             type: 'echart',
@@ -158,8 +159,49 @@ Copyright © HatioLab Inc. All rights reserved.
             paddingBottom: 10,
             text: 'SAMPLE ECHARTS',
             data: {
-              '高度(km)与气温(°C)变化关系': [15, -50, -56.5, -46.5, -22.1, -2.5, -27.7, -55.7, -76.5]
+              '邮件营销': [120, 132, 101, 134, 90, 230, 210],
+              '联盟广告': [220, 182, 191, 234, 290, 330, 310],
+              '视频广告': [150, 232, 201, 154, 190, 330, 410],
+              '直接访问': [320, 332, 301, 334, 390, 330, 320],
+              '搜索引擎': [820, 932, 901, 934, 1290, 1330, 1320]
             },
+            series: `[{
+                name:'邮件营销',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: data['邮件营销']
+              }, {
+                name:'联盟广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:data['联盟广告']
+              }, {
+                name:'视频广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:data['视频广告']
+              }, {
+                name:'直接访问',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:data['直接访问']
+              }, {
+                name:'搜索引擎',
+                type:'line',
+                stack: '总量',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'top'
+                  }
+                },
+                areaStyle: {normal: {}},
+                data:data['搜索引擎']
+              }]`,
             option: `{
               title: {
                 text: '堆叠区域图'
@@ -194,43 +236,6 @@ Copyright © HatioLab Inc. All rights reserved.
               }],
               yAxis : [{
                 type : 'value'
-              }],
-              series : [{
-                name:'邮件营销',
-                type:'line',
-                stack: '总量',
-                areaStyle: {normal: {}},
-                data:[120, 132, 101, 134, 90, 230, 210]
-              }, {
-                name:'联盟广告',
-                type:'line',
-                stack: '总量',
-                areaStyle: {normal: {}},
-                data:[220, 182, 191, 234, 290, 330, 310]
-              }, {
-                name:'视频广告',
-                type:'line',
-                stack: '总量',
-                areaStyle: {normal: {}},
-                data:[150, 232, 201, 154, 190, 330, 410]
-              }, {
-                name:'直接访问',
-                type:'line',
-                stack: '总量',
-                areaStyle: {normal: {}},
-                data:[320, 332, 301, 334, 390, 330, 320]
-              }, {
-                name:'搜索引擎',
-                type:'line',
-                stack: '总量',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'top'
-                  }
-                },
-                areaStyle: {normal: {}},
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
               }]
             }`
           }]

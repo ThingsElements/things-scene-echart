@@ -2,6 +2,8 @@
  * Copyright © HatioLab Inc. All rights reserved.
  */
 
+// import * as scene from '../bower_components/things-scene-core/things-scene-min.js'
+
 const NATURE = {
   mutable: false,
   resizable: true,
@@ -11,10 +13,15 @@ const NATURE = {
     label: 'option',
     name: 'option',
     property: 'option'
+  }, {
+    type: 'textarea',
+    label: 'series',
+    name: 'series',
+    property: 'series'
   }]
 }
 
-const DEFAULT_OPTIONS = {
+const DEFAULT_OPTION = {
   title: 'NO OPTIONS'
 }
 
@@ -27,6 +34,7 @@ export default class Echart extends HTMLOverlayContainer {
   static load(component) {
     if (Echart.loaded) {
       component.onload()
+      // requestAnimationFrame(() => component.onload())
       return
     }
 
@@ -52,7 +60,8 @@ export default class Echart extends HTMLOverlayContainer {
 
   onload() {
     this._chart = echarts.init(this._anchor);
-    this.reposition();
+    requestAnimationFrame(() => this.reposition())
+    // this.reposition();
   }
 
   dispose() {
@@ -69,21 +78,7 @@ export default class Echart extends HTMLOverlayContainer {
     if(!this._chart)
       return
 
-    var {
-      option = DEFAULT_OPTIONS
-    } = this.state
-
-    var options = option
-
-    try {
-      if(typeof(options) !== 'object')
-        eval(`options = ${options}`)
-    } catch(e) {
-      console.error(e)
-      options = DEFAULT_OPTIONS
-    }
-
-    this._chart.setOption(this.buildOptions(options));
+    this._chart.setOption(this.buildOptions(Object.assign({series: this.series}, this.option)));
 
     this._chart.resize({
       width: 'auto',
@@ -107,10 +102,7 @@ export default class Echart extends HTMLOverlayContainer {
 
   buildOptions(options) {
     var {
-      title = {},
-      grid = {},
-      series = [],
-      backgroundColor
+      title = {}
     } = options
 
     options.title = Object.assign(title, {
@@ -118,18 +110,64 @@ export default class Echart extends HTMLOverlayContainer {
       show: !!this.text
     })
 
-    options.series = series.map(serial => {
-      let {
-        name,
-        data
-      } = serial
+    // if(!series.length)
+    //   return options
 
-      serial.data = (this.data && this.data[name]) || data
+    // if(series.length == 1) {
+    //   let {
+    //     name,
+    //     data
+    //   } = series[0]
 
-      return serial
-    })
+    //   options.series[0].data = this.data[name] || this.data || data
+    // } else {
+    //   options.series = series.map(serial => {
+    //     let {
+    //       name,
+    //       data
+    //     } = serial
+
+    //     serial.data = (this.data && this.data[name]) || data
+
+    //     return serial
+    //   })
+    // }
 
     return options
+  }
+
+  get series() {
+    var {
+      series,
+      data
+    } = this.state
+
+    if(typeof(series) !== 'object') {
+      try {
+        eval(`series = ${series}`)
+      } catch (e) {
+        scene.error(e)
+      }
+    }
+
+    return series
+  }
+
+  get option() {
+    var {
+      option = DEFAULT_OPTION,
+      data
+    } = this.state
+
+    if(typeof(option) !== 'object') {
+      try {
+        eval(`option = ${option}`)
+      } catch (e) {
+        scene.error(e)
+      }
+    }
+
+    return option
   }
 
   get tagName() {
