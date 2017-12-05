@@ -2,8 +2,6 @@
  * Copyright © HatioLab Inc. All rights reserved.
  */
 
-// import * as scene from '../bower_components/things-scene-core/things-scene-min.js'
-
 const NATURE = {
   mutable: false,
   resizable: true,
@@ -26,48 +24,12 @@ const DEFAULT_OPTION = {
 }
 
 var {
-  HTMLOverlayContainer
+  HTMLOverlayContainer,
+  ScriptLoader,
+  error
 } = scene
 
 export default class Echart extends HTMLOverlayContainer {
-
-  static load(component) {
-    if (Echart.loaded) {
-      component.onload()
-      // requestAnimationFrame(() => component.onload())
-      return
-    }
-
-    if (this.script) {
-      Echart.readies.push(component)
-      return
-    }
-
-    this.readies = [component]
-
-    // TODO Promise ..
-    var script = document.createElement('script');
-    script.onload = function () {
-      Echart.loaded = true
-      Echart.readies.forEach(component => component.onload())
-      delete Echart.readies
-    }
-
-    script.src = 'http://echarts.baidu.com/dist/echarts.min.js';
-
-    document.head.appendChild(script)
-
-    script = document.createElement('script');
-
-    script.src = 'http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js';
-    document.head.appendChild(script)
-  }
-
-  onload() {
-    this._chart = echarts.init(this._anchor);
-    requestAnimationFrame(() => this.reposition())
-    // this.reposition();
-  }
 
   dispose() {
     this._echart && this._echart.dispose()
@@ -99,7 +61,15 @@ export default class Echart extends HTMLOverlayContainer {
 
     this.element.appendChild(this._anchor)
 
-    Echart.load(this)
+    ScriptLoader.load([
+      'http://echarts.baidu.com/dist/echarts.js'
+    ]).then(() => {
+
+      requestAnimationFrame(() => {
+        this._chart = echarts.init(this._anchor);
+        this.reposition()
+      })
+    }, error);
   }
 
   setElementProperties(div) {
