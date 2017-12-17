@@ -1,5 +1,6 @@
 {
-  "name": "things-scene-echart",
+  "name": "@things-elements/things-scene-echart",
+  "flat": true,
   "version": "0.1.0",
   "description": "An echart component for things-scene.",
   "main": "things-scene-echar-min.js",
@@ -41,5 +42,7 @@
     "gulp": "^3.8.5",
     "gulp-header-license": "^1.0.9"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@hatiolab/things-scene":"^2.2.36"
+  }
 }
