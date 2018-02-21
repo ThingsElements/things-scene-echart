@@ -1,9 +1,9 @@
 {
   "name": "@things-elements/things-scene-echart",
   "flat": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An echart component for things-scene.",
-  "main": "things-scene-echar-min.js",
+  "main": "things-scene-echart-min.js",
   "directories": {
     "test": "test"
   },
