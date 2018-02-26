@@ -1,9 +1,10 @@
 {
   "name": "@things-elements/things-scene-echart",
   "flat": true,
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "An echart component for things-scene.",
-  "main": "things-scene-echart-min.js",
+  "main": "src/index.js",
+  "things-shell": true,
   "directories": {
     "test": "test"
   },
@@ -40,7 +41,8 @@
     "watchify": "^3.3.1",
     "node-canvas": "Automattic/node-canvas",
     "gulp": "^3.8.5",
-    "gulp-header-license": "^1.0.9"
+    "gulp-header-license": "^1.0.9",
+    "things-shell": "^0.2.22"
   },
   "dependencies": {
     "@hatiolab/things-scene":"^2.2.36"
