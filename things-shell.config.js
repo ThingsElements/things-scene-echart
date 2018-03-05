@@ -1,25 +1,22 @@
-import locales from './locales'
+import locales from './locales';
+
+import icon from './assets/echart.png';
 
 var templates = [{
-  name: 'echart',
-  /* 다국어 키 표현을 어떻게.. */
-  description: '...',
-  /* 다국어 키 표현을 어떻게.. */
+  type: 'echart',
+  description: 'echart',
   group: 'chartAndGauge',
   /* line|shape|textAndMedia|chartAndGauge|table|container|dataSource|IoT|3D|warehouse|form|etc */
-  icon: '../',
-  /* 또는, Object */
-  template: {
+  icon,
+  model: {
     type: 'echart',
-    model: {
-      type: 'echart',
-      top: 0,
-      left: 0,
-      width: 400,
-      height: 300,
-      fontColor: "red",
-      lineWidth: 1,
-      series: `
+    top: 0,
+    left: 0,
+    width: 400,
+    height: 300,
+    fontColor: "red",
+    lineWidth: 1,
+    series: `
 [{
   name:'利润',
   type:'bar',
@@ -52,7 +49,7 @@ var templates = [{
   },
   data:[-120, -132, -101, -134, -190, -230, -210]
 }]`,
-      option: `
+    option: `
 {
   tooltip : {
     trigger: 'axis',
@@ -78,7 +75,6 @@ var templates = [{
     data : ['周一','周二','周三','周四','周五','周六','周日']
   }]
 }`
-    }
   }
 }];
 
