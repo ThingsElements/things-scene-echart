@@ -1,6 +1,7 @@
 /*
  * Copyright © HatioLab Inc. All rights reserved.
  */
+import { Component, HTMLOverlayContainer, ScriptLoader, error } from '@hatiolab/things-scene';
 
 const NATURE = {
   mutable: false,
@@ -22,12 +23,6 @@ const NATURE = {
 const DEFAULT_OPTION = {
   title: 'NO OPTIONS'
 }
-
-var {
-  HTMLOverlayContainer,
-  ScriptLoader,
-  error
-} = scene
 
 export default class Echart extends HTMLOverlayContainer {
 
@@ -154,4 +149,4 @@ export default class Echart extends HTMLOverlayContainer {
   }
 }
 
-scene.Component.register('echart', Echart);
+Component.register('echart', Echart);
