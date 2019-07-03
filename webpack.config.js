@@ -4,22 +4,22 @@ const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-  mode: "production",
+  mode: 'production',
   entry: {
-    "things-scene-echart-ie": ["./src/index.js"]
+    'things-scene-echart-ie': ['./src/index.js']
   },
   output: {
-    path: path.resolve("./dist"),
-    filename: "[name].js"
+    path: path.resolve('./dist'),
+    filename: '[name].js'
   },
   resolve: {
-    modules: ["./node_modules"]
+    modules: ['./node_modules']
   },
   resolveLoader: {
-    modules: ["./node_modules"]
+    modules: ['./node_modules']
   },
   externals: {
-    "@hatiolab/things-scene": "scene"
+    '@hatiolab/things-scene': 'scene'
   },
   optimization: {
     minimize: true
@@ -31,35 +31,36 @@ module.exports = {
         exclude: /(node_modules)/,
         use: [
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
               presets: [
                 [
-                  "@babel/preset-env",
+                  '@babel/preset-env',
                   {
                     targets: {
                       ie: 11
                     }
                   }
                 ]
-              ]
+              ],
+              plugins: ['@babel/plugin-syntax-dynamic-import']
             }
           }
         ]
       },
       {
         test: /\.(gif|jpe?g|png)$/,
-        loader: "url-loader?limit=25000",
+        loader: 'url-loader?limit=25000',
         query: {
           limit: 10000,
-          name: "[path][name].[hash:8].[ext]"
+          name: '[path][name].[hash:8].[ext]'
         }
       },
       {
         test: /\.(obj|mtl|tga|3ds|max|dae)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {}
           }
         ]
@@ -71,5 +72,5 @@ module.exports = {
       test: /\-min\.js$/
     })
   ],
-  devtool: "cheap-module-source-map"
+  devtool: 'cheap-module-source-map'
 };

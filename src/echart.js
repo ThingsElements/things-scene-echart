@@ -1,7 +1,7 @@
 /*
  * Copyright © HatioLab Inc. All rights reserved.
  */
-import { Component, HTMLOverlayContainer, ScriptLoader, error } from '@hatiolab/things-scene';
+import { Component, HTMLOverlayContainer, error } from '@hatiolab/things-scene';
 
 const NATURE = {
   mutable: false,
@@ -56,7 +56,7 @@ export default class Echart extends HTMLOverlayContainer {
 
     this.element.appendChild(this._anchor)
 
-    import('echarts').then((echarts) => {
+    import('echarts').then(echarts => {
 
       requestAnimationFrame(() => {
         this._chart = echarts.init(this._anchor);
