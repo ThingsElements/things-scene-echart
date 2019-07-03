@@ -56,9 +56,7 @@ export default class Echart extends HTMLOverlayContainer {
 
     this.element.appendChild(this._anchor)
 
-    ScriptLoader.load([
-      'http://echarts.baidu.com/dist/echarts.js'
-    ]).then(() => {
+    import('echarts').then((echarts) => {
 
       requestAnimationFrame(() => {
         this._chart = echarts.init(this._anchor);

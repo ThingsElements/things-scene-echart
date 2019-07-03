@@ -30,6 +30,7 @@
     "@hatiolab/things-shell": "*"
   },
   "dependencies": {
-    "@hatiolab/things-scene": "*"
+    "@hatiolab/things-scene": "*",
+    "echarts": "^4.2.1"
   }
 }
