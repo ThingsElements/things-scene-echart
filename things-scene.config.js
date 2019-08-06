@@ -1,5 +1,3 @@
-import locales from './locales';
-
 import icon from './assets/echart.png';
 
 var templates = [{
@@ -79,6 +77,5 @@ var templates = [{
 }];
 
 export default {
-  templates,
-  locales
+  templates
 };
